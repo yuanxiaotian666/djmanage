@@ -28,9 +28,24 @@ class SysUserSerializer(serializers.ModelSerializer):
             return queryset.roleName
         else:
             return ""
+
+    def validate_modifier(self, modifier):
+        return self.context['request'].user.username
+
+    def validate_modifyId(self, modifyId):
+        return self.context['request'].user.userId
+
     class Meta:
         model = SysUser
         exclude = ('password',)
+
+    def create(self, validated_data):
+        """新建"""
+        validated_data['creator'] = self.context['request'].user
+        validated_data['createId'] = self.context['request'].userId
+        validated_data['modifier'] = self.context['request'].user
+        validated_data['modifyId'] = self.context['request'].userId
+        return SysUser.objects.create(**validated_data)
 
 
 
@@ -87,7 +102,6 @@ class UserInfoViewSet(APIView):
 class ChangePwdViewSet(APIView):
     """修改密码接口"""
     def post(self,request):
-        print(request.data)
         oldPwd = request.data.get('oldPassword')
         isPwd = request.user.check_password(oldPwd)
         if isPwd:

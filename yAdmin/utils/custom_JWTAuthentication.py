@@ -29,17 +29,19 @@ def Authentication(path,method):
         menuId = queryset.menuId
         auth = SysRoleauth.objects.filter(menuId=menuId).first().authValue
         authList = auth.split(',')
-        for item in authList:
-            if method=="GET" and item in ['Search']:
-                return True
-            elif method=="POST" and item in ['Create']:
-                return True
-            elif method=="PUT" and item in ['Update']:
-                return True
-            elif method=="DELETE" and item in ['Delete']:
-                return True
-            else:
-                return False
+        if method == "GET":
+            methodList = ['Search']
+        elif method =="POST":
+            methodList = ['Create']
+        elif method =='PUT':
+            methodList = ['Update']
+        elif method =='DELETE':
+            methodList = ['Delete']
+
+        if set(authList)>set(methodList):
+            return True
+        else:
+            return False
     else:
         urlFilter = ['currentTreePermission','userTreePermission','loginedUserInfo','changePwd']
         if tableName in urlFilter:

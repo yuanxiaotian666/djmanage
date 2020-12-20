@@ -25,9 +25,18 @@ class SysMenuSerializer(serializers.ModelSerializer):
     def get_actions(self, instance):
         return json.loads(instance.auth)
 
+    def validate_modifier(self, modifier):
+        return self.context['request'].user.username
+
     class Meta:
         model = SysMenu
         fields = "__all__"
+
+    def create(self, validated_data):
+        """新建"""
+        validated_data['creator'] = self.context['request'].user
+        validated_data['modifier'] = self.context['request'].user
+        return SysMenu.objects.create(**validated_data)
 
 class SysMenuViewSet(CustomViewBase):
     """

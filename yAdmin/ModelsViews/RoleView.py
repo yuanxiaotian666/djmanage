@@ -26,10 +26,18 @@ class SysRoleSerializer(serializers.ModelSerializer):
         else:
             return ""
 
+    def validate_modifier(self, modifier):
+        return self.context['request'].user.username
 
     class Meta:
         model = SysRole
         fields = '__all__'
+
+    def create(self, validated_data):
+        """新建"""
+        validated_data['creator'] = self.context['request'].user
+        validated_data['modifier'] = self.context['request'].user
+        return SysRole.objects.create(**validated_data)
 
 
 class SysRoleViewSet(CustomViewBase):
