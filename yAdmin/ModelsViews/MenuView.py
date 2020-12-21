@@ -12,7 +12,7 @@ import json
 from rest_framework import serializers
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
-from yAdmin.models import SysMenu
+from yAdmin.models import SysMenu, SysRoleauth
 from yAdmin.utils.custom_JWTAuthentication import JWTAuthentication
 
 from yAdmin.utils.custom_viewset_base import CustomViewBase
@@ -47,6 +47,11 @@ class SysMenuViewSet(CustomViewBase):
        retrieve:get单例
        destroy:delete删除
        """
-    # authentication_classes = (JWTAuthentication,)
-    queryset = SysMenu.objects.all()
     serializer_class = SysMenuSerializer
+
+    def get_queryset(self):
+        #获取当前登录用户的角色
+        roleId = self.request.user.roleId
+        #根据角色查询权限和菜单
+        menus = SysRoleauth.objects.filter(roleId=roleId).values('menuId')
+        return SysMenu.objects.filter(menuId__in=menus).all()

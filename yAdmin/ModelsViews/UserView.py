@@ -41,10 +41,11 @@ class SysUserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         """新建"""
-        validated_data['creator'] = self.context['request'].user
-        validated_data['createId'] = self.context['request'].userId
-        validated_data['modifier'] = self.context['request'].user
-        validated_data['modifyId'] = self.context['request'].userId
+        validated_data['creator'] = self.context['request'].user.username
+        validated_data['createId'] = self.context['request'].user.userId
+        validated_data['modifier'] = self.context['request'].user.username
+        validated_data['modifyId'] = self.context['request'].user.userId
+        validated_data['password'] = make_password(123456)
         return SysUser.objects.create(**validated_data)
 
 
