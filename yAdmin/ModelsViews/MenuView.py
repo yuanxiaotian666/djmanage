@@ -52,6 +52,9 @@ class SysMenuViewSet(CustomViewBase):
     def get_queryset(self):
         #获取当前登录用户的角色
         roleId = self.request.user.roleId
-        #根据角色查询权限和菜单
-        menus = SysRoleauth.objects.filter(roleId=roleId).values('menuId')
-        return SysMenu.objects.filter(menuId__in=menus).all()
+        #根据角色查询权限和菜单, 超级管理员权限拥有所以才到
+        if roleId==1:
+            return SysMenu.objects.all()
+        else:
+            menus = SysRoleauth.objects.filter(roleId=roleId).values('menuId')
+            return SysMenu.objects.filter(menuId__in=menus).all()
