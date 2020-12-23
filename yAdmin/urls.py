@@ -18,7 +18,8 @@ from yAdmin.ModelsViews.captchaImage import imageView
 
 urlpatterns = [
     path('captcha/', imageView.as_view({'get': 'list'})),
-    path('menu/', SysMenuViewSet.as_view({'get':'list','post':'create'})),
+    path('sidebarMenu/', SysMenuViewSet.as_view({'get':'list'})),
+    path('menu/', SysMenuViewSet.as_view({'post':'create'})),
     re_path('menu/(?P<pk>.*?)/', SysMenuViewSet.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'})),
     path('role/', SysRoleViewSet.as_view({'get':'list','post':'create'})),
     re_path('role/(?P<pk>.*?)/', SysRoleViewSet.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'})),

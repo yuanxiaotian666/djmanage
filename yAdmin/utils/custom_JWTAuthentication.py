@@ -28,6 +28,7 @@ def Authentication(path,method):
     if queryset:
         menuId = queryset.menuId
         auth = SysRoleauth.objects.filter(menuId=menuId).first().authValue
+        auth = auth+','
         authList = auth.split(',')
         if method == "GET":
             methodList = ['Search']
