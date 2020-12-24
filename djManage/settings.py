@@ -150,7 +150,7 @@ REST_FRAMEWORK = {
 import datetime
 
 JWT_AUTH = {
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=2),  # 设置 JWT Token 的有效时间
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=2),  # 设置 JWT Token 的有效时间  
     'JWT_AUTH_HEADER_PREFIX': 'JWT',  # 设置 请求头中的前缀
     'JWT_RESPONSE_PAYLOAD_HANDLER': 'yAdmin.ModelsViews.login.jwt_response'  # 设置登录自定义认证的返回数据
     ,'JWT_ALLOW_REFRESH': True,

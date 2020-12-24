@@ -18,11 +18,13 @@ def custom_exception_handler(exc, context):
     # Now add the HTTP status code to the response.
     if response is not None:
         print("错误信息",response.status_code,response.data)
+        if str(exc) in "token已过期":
+            response.status_code = 401
         errorMsg = copy.deepcopy(response.data)
         response.data.clear()
         response.data['code'] = response.status_code
         response.data['data'] = None
-
+        print(response.status_code)
         if response.status_code == 404:
             try:
                 response.data['message'] = response.data.pop('detail')

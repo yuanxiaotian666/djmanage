@@ -9,8 +9,7 @@
 """
 #自定义一个权限
 
-from rest_framework.authentication import BaseAuthentication
-from rest_framework.exceptions import AuthenticationFailed,PermissionDenied
+from rest_framework.exceptions import AuthenticationFailed, PermissionDenied, NotAuthenticated
 import jwt
 from rest_framework_jwt.authentication import BaseJSONWebTokenAuthentication
 from rest_framework_jwt.authentication import jwt_decode_handler
@@ -44,7 +43,7 @@ def Authentication(path,method):
         else:
             return False
     else:
-        urlFilter = ['currentTreePermission','userTreePermission','loginedUserInfo','changePwd']
+        urlFilter = ['currentTreePermission','userTreePermission','loginedUserInfo','changePwd','sidebarMenu']
         if tableName in urlFilter:
             return True
         else:
