@@ -54,13 +54,14 @@ class JWTAuthentication(BaseJSONWebTokenAuthentication):
     def authenticate(self, request):
         # 认证通过，返回user，auth
         # 认证失败，返回None
-        auth = request.META.get('HTTP_AUTHORIZATION')  # 前台用auth携带token
-        if  auth is not None:
-            token = auth.replace('JWT ','')
+        auth = request.META.get('HTTP_AUTHORIZATION')  # 前端用header中AUTHORIZATION携带token
+        if auth is not None:
+            token = auth.replace('JWT ','') #取出token
         else:
             token = None
         try:
-            payload = jwt_decode_handler(token)
+            payload = jwt_decode_handler(token) #解析token
+            print(payload)
             user = self.authenticate_credentials(payload)
             if user.is_staff == False:
                 isAuth = Authentication(request.path,request.method)

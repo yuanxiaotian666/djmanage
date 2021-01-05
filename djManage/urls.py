@@ -24,5 +24,5 @@ urlpatterns = [
     path('login/', loginViewSet.as_view()),
     path('refreshToken/',refresh_jwt_token),
     path('api/', include('yAdmin.urls')),
-    re_path(r'', TemplateView.as_view(template_name='index.html')),
+    path(r'', TemplateView.as_view(template_name='index.html')),
 ]

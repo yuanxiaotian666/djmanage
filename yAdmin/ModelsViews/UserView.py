@@ -62,6 +62,7 @@ class SysUserViewSet(CustomViewBase):
     # authentication_classes = (JWTAuthentication,)
     queryset = SysUser.objects.all()
     serializer_class = SysUserSerializer
+    filter_fields = ('username', 'nickName', 'roleName', 'enable', 'gender')
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()

@@ -140,8 +140,7 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.AutoSchema',
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        'yAdmin.utils.custom_JWTAuthentication.JWTAuthentication',
+        'yAdmin.utils.custom_JWTAuthentication.JWTAuthentication', #自定义权限处理
     ),
     'DEFAULT_PAGINATION_CLASS':  'yAdmin.utils.custom_pagination.LargeResultsSetPagination',#自定义的分页处理
     'EXCEPTION_HANDLER': 'yAdmin.utils.custom_exception.custom_exception_handler', #自定义的异常处理
@@ -150,7 +149,7 @@ REST_FRAMEWORK = {
 import datetime
 
 JWT_AUTH = {
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=2),  # 设置 JWT Token 的有效时间  
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=2),  # 设置 JWT Token 的有效时间
     'JWT_AUTH_HEADER_PREFIX': 'JWT',  # 设置 请求头中的前缀
     'JWT_RESPONSE_PAYLOAD_HANDLER': 'yAdmin.ModelsViews.login.jwt_response'  # 设置登录自定义认证的返回数据
     ,'JWT_ALLOW_REFRESH': True,

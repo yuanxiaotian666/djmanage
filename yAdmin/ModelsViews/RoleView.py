@@ -52,3 +52,4 @@ class SysRoleViewSet(CustomViewBase):
     # authentication_classes = (JWTAuthentication,)
     queryset = SysRole.objects.exclude(parentId=0).all()
     serializer_class = SysRoleSerializer
+    filter_fields = ('roleName', 'enable', 'creator', 'createDate', 'modifyDate', 'modifier')
