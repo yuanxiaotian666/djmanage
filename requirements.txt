@@ -16,7 +16,7 @@ Jinja2==2.11.2
 MarkupSafe==1.1.1
 mysqlclient==2.0.1
 Pillow==8.0.1
-PyJWT==1.7.1
+PyJWT==2.4.0
 pytz==2020.4
 requests==2.25.0
 Serializer==0.2.1
